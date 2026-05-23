@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What I Think — renae.co.nz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f5f2ee;
+      --surface:   #faf8f5;
+      --sidebar-bg:#1c1c26;
+      --sidebar-text: rgba(220, 210, 230, 0.75);
+      --sidebar-active: #e8dff5;
+      --accent:    #7c5cbf;
+      --accent-lt: #a07de0;
+      --ink:       #1a1520;
+      --mid:       #5a5260;
+      --rule:      rgba(100, 80, 140, 0.15);
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --sans:      'Jost', sans-serif;
+      --title:     'Cinzel', serif;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      display: flex;
+      opacity: 0;
+      animation: fadein 0.7s 0.1s ease forwards;
+    }
+
+    @keyframes fadein {
+      to { opacity: 1; }
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 230px;
+      min-width: 230px;
+      background: var(--sidebar-bg);
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem 0 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 1px; height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(140,100,220,0.3) 30%, rgba(140,100,220,0.3) 70%, transparent);
+    }
+
+    /* Subtle sidebar background shimmer */
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 120% 40% at 50% 20%, rgba(100, 60, 160, 0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 40% at 50% 85%, rgba(60, 30, 100, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .sidebar-header {
+      padding: 0 1.6rem 2rem;
+      border-bottom: 1px solid rgba(140, 100, 220, 0.15);
+      margin-bottom: 1.2rem;
+    }
+
+    .sidebar-title {
+      font-family: var(--title);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: rgba(180, 160, 210, 0.5);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .sidebar-home {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(220, 210, 235, 0.7);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .sidebar-home:hover { color: var(--sidebar-active); }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li button {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.75rem 1.6rem;
+      text-align: left;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--sidebar-text);
+      transition: color 0.25s, background 0.25s;
+      position: relative;
+    }
+
+    nav ul li button::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 2px; height: 0;
+      background: var(--accent-lt);
+      transition: height 0.3s ease;
+      border-radius: 0 2px 2px 0;
+    }
+
+    nav ul li button:hover {
+      color: rgba(230, 220, 245, 0.9);
+      background: rgba(120, 80, 180, 0.08);
+    }
+
+    nav ul li button.active {
+      color: var(--sidebar-active);
+      font-weight: 500;
+    }
+    nav ul li button.active::before {
+      height: 60%;
+    }
+
+    /* ── MAIN PANEL ── */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      background: var(--surface);
+      position: relative;
+    }
+
+    /* Subtle background texture */
+    .main::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 230px; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 15%, rgba(140, 100, 200, 0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 10% 80%, rgba(100, 140, 200, 0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 3.5rem 5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topic {
+      display: none;
+      animation: slideup 0.45s ease forwards;
+    }
+    .topic.active {
+      display: block;
+    }
+
+    @keyframes slideup {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .topic-eyebrow {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+    }
+
+    .topic h1 {
+      font-family: var(--title);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.15;
+      margin-bottom: 1.6rem;
+      letter-spacing: 0.02em;
+    }
+
+    .topic .lede {
+      font-size: 1.25rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--mid);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      border-left: 2px solid var(--accent);
+      padding-left: 1.2rem;
+    }
+
+    .topic p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: #3a3040;
+      margin-bottom: 1.3rem;
+    }
+
+    .topic .rule {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(to right, var(--accent), transparent);
+      margin: 2.5rem 0;
+    }
+
+    .topic p strong {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* Welcome / default state */
+    .welcome {
+      padding-top: 1rem;
+    }
+
+    .welcome .big-num {
+      font-family: var(--title);
+      font-size: 5rem;
+      color: rgba(120, 80, 180, 0.08);
+      line-height: 1;
+      margin-bottom: -1.5rem;
+      display: block;
+    }
+
+    /* Scrollbar */
+    .main::-webkit-scrollbar { width: 5px; }
+    .main::-webkit-scrollbar-track { background: transparent; }
+    .main::-webkit-scrollbar-thumb { background: rgba(120, 80, 180, 0.2); border-radius: 3px; }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .sidebar { width: 180px; min-width: 180px; }
+      .content-wrap { padding: 2.5rem 1.8rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <p class="sidebar-title">renae.co.nz</p>
+      <a class="sidebar-home" href="index.html">← back</a>
+    </div>
+    <nav>
+      <ul>
+        <li><button onclick="show('creativity')" id="btn-creativity">On Creativity</button></li>
+        <li><button onclick="show('solitude')"   id="btn-solitude">On Solitude</button></li>
+        <li><button onclick="show('technology')" id="btn-technology">On Technology</button></li>
+        <li><button onclick="show('beauty')"     id="btn-beauty">On Beauty</button></li>
+        <li><button onclick="show('change')"     id="btn-change">On Change</button></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="content-wrap">
+
+      <!-- Default welcome -->
+      <div class="topic active welcome" id="topic-welcome">
+        <span class="big-num">—</span>
+        <div class="topic-eyebrow">Welcome</div>
+        <h1>What I Think</h1>
+        <p class="lede">These are my thoughts. Unfinished, honest, and mine.</p>
+        <p>Select a topic from the menu to begin.</p>
+      </div>
+
+      <!-- On Creativity -->
+      <div class="topic" id="topic-creativity">
+        <div class="topic-eyebrow">Essay</div>
+        <h1>On Creativity</h1>
+        <p class="lede">Creativity isn't a gift. It's a discipline disguised as chaos.</p>
+        <div class="rule"></div>
+        <p>I used to believe that creative people were simply born that way — that inspiration was something that visited you, like weather. You either had a stormy mind or a clear one. But I've come to think that's entirely wrong.</p>
+        <p><strong>Creativity is a practice.</strong> It's what happens when you show up every day, even when the well feels dry, and you make something anyway. The act of making — however imperfect — is what keeps the channel open.</p>
+        <p>The hardest part isn't the blank page. It's tolerating the gap between what you can imagine and what you can currently produce. Every person I admire creatively has learned to sit with that gap without flinching.</p>
+        <p>Make ugly things. Finish them. Then make more.</p>
+      </div>
+
+      <!-- On Solitude -->
+      <div class="topic" id="topic-solitude">
+        <div class="topic-eyebrow">Reflection</div>
+        <h1>On Solitude</h1>
+        <p class="lede">We've confused loneliness with solitude, and it's costing us something essential.</p>
+        <div class="rule"></div>
+        <p>Loneliness is the ache of unwanted separation. Solitude is something you choose — a deliberate turning inward that replenishes rather than depletes.</p>
+        <p>Most people I know are terrified of quiet. They reach for their phones before they've even opened their eyes in the morning. I understand the impulse. Silence has weight. It presses against you and asks things.</p>
+        <p><strong>But those questions are worth answering.</strong> The version of yourself that exists without an audience is the truest version. And if you never spend time with that person, you risk building an entire life around a character you're performing, rather than someone you actually are.</p>
+        <p>Ten minutes a day. Just sit. It's enough to start.</p>
+      </div>
+
+      <!-- On Technology -->
+      <div class="topic" id="topic-technology">
+        <div class="topic-eyebrow">Observation</div>
+        <h1>On Technology</h1>
+        <p class="lede">Tools don't shape us. Our relationship to them does.</p>
+        <div class="rule"></div>
+        <p>Every generation has had its moral panic about a new technology — the printing press, the telephone, television. In hindsight we usually see those fears as overblown. But that doesn't mean the concerns were wrong to raise.</p>
+        <p>The question worth asking isn't "is this technology good or bad?" It's "what does this technology make easier, and what does it make harder?" Because every tool tips the scales somewhere.</p>
+        <p><strong>The danger isn't the tool itself.</strong> It's passive adoption — accepting whatever default behaviour a platform nudges you toward without noticing. Intentional use is the antidote. Use the thing, then put it down. Notice what changes.</p>
+        <p>We built these things. We can choose how we relate to them.</p>
+      </div>
+
+      <!-- On Beauty -->
+      <div class="topic" id="topic-beauty">
+        <div class="topic-eyebrow">On Aesthetics</div>
+        <h1>On Beauty</h1>
+        <p class="lede">Beauty is not decoration. It is information about what matters.</p>
+        <div class="rule"></div>
+        <p>We're taught to be suspicious of beauty — to treat an interest in aesthetics as frivolous, even vain. But I think that's a mistake. Attention to beauty is attention to the world. It's a form of care.</p>
+        <p>When something is made beautifully, it carries a signal: someone thought about how this would feel to encounter. That consideration has value. It changes the experience of moving through a space, reading a page, using an object.</p>
+        <p><strong>Ugly things erode us quietly.</strong> Not dramatically, not all at once. But environments that haven't been thought about tend to communicate that they don't expect much from you. Beautiful environments ask something different of you. They raise your own standards by example.</p>
+        <p>Pay attention to what moves you. Then make more things like that.</p>
+      </div>
+
+      <!-- On Change -->
+      <div class="topic" id="topic-change">
+        <div class="topic-eyebrow">Personal</div>
+        <h1>On Change</h1>
+        <p class="lede">The self is not fixed. That's terrifying and wonderful in equal measure.</p>
+        <div class="rule"></div>
+        <p>One of the most destabilising realisations I've had is that the person I was five years ago would barely recognise my current priorities. And the person I'll be in five more years probably can't be predicted from here.</p>
+        <p>We cling to identity as though it were something solid. "I'm not the kind of person who..." is a sentence that closes more doors than it protects. Change happens whether you cooperate or not. The only question is whether you're driving it or being dragged.</p>
+        <p><strong>The most useful thing I've found</strong> is to hold your self-concept loosely. Not to abandon it — you need somewhere to stand — but to treat it as provisional. A working theory about who you are, subject to revision as new evidence comes in.</p>
+        <p>You are allowed to become someone your old self wouldn't have predicted.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    function show(id) {
+      // Hide all topics
+      document.querySelectorAll('.topic').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+
+      // Show selected
+      const topic = document.getElementById('topic-' + id);
+      const btn   = document.getElementById('btn-' + id);
+      if (topic) topic.classList.add('active');
+      if (btn)   btn.classList.add('active');
+
+      // Scroll main panel to top
+      document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
