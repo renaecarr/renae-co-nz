@@ -75,22 +75,15 @@
       font-size: clamp(1.4rem, 3.5vw, 2.2rem);
       color: var(--dim);
       letter-spacing: 0.08em;
-      display: flex;
-      align-items: center;
-      gap: 0.6em;
       white-space: nowrap;
-    }
-
-    .tagline a {
+      user-select: none;
       display: inline-flex;
       align-items: center;
       gap: 0.55em;
-      text-decoration: none;
-      color: inherit;
       transition: color 0.6s ease, letter-spacing 0.6s ease;
     }
 
-    .tagline a:hover {
+    .tagline:hover {
       color: rgba(220, 205, 235, 0.85);
       letter-spacing: 0.12em;
     }
@@ -103,7 +96,7 @@
       transition: transform 0.5s ease, opacity 0.5s ease;
     }
 
-    .tagline a:hover .arrow {
+    .tagline:hover .arrow {
       transform: translateX(5px);
       opacity: 1;
     }
@@ -139,6 +132,21 @@
       text-decoration: none;
       background: transparent;
     }
+
+    /* AI generated label */
+    .ai-label {
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem;
+      z-index: 10;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.65rem;
+      font-style: italic;
+      letter-spacing: 0.1em;
+      color: rgba(180, 160, 210, 0.25);
+      pointer-events: none;
+      user-select: none;
+    }
   </style>
 </head>
 <body>
@@ -146,16 +154,13 @@
   <div class="halo"></div>
 
   <div class="scene">
-    <p class="tagline">
-      <a href="thoughts.html">
-        Here's what I think
-        <span class="arrow">&#8594;</span>
-      </a>
-    </p>
+    <p class="tagline">Here's what I think <span class="arrow">&#8594;</span></p>
   </div>
 
   <!-- Invisible portal, bottom-right corner -->
   <a class="secret" href="thoughts.html" aria-hidden="true" tabindex="-1"></a>
+
+  <span class="ai-label">AI generated</span>
 
 </body>
 </html>
